@@ -1,0 +1,52 @@
+# Environnement de TP du module « Gestion intégrée des systèmes ERP et CRM ».
+# Un seul démarrage suffit : docker compose up -d
+#   db    : PostgreSQL, la base de données d'Odoo
+#   init  : prépare la base « atlas_micro » au premier lancement (3 à 8 min), puis s'arrête
+#   odoo  : le serveur Odoo, accessible sur http://localhost:8069 (admin / admin)
+# Instance locale de cours : mots de passe simples, port ouvert uniquement sur ce poste.
+name: erp-crm-ci3bi
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U odoo -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+  init:
+    image: odoo:19.0
+    depends_on:
+      db:
+        condition: service_healthy
+    # Les fins de ligne Windows sont retirées avant l'exécution du script.
+    entrypoint: ["bash", "-c", "tr -d '\\r' < /mnt/atlas/init.sh > /tmp/init.sh && bash /tmp/init.sh"]
+    volumes:
+      - ./odoo:/mnt/atlas:ro
+      - odoo-data:/var/lib/odoo
+    restart: "no"
+
+  odoo:
+    image: odoo:19.0
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    command: ["odoo", "--database=atlas_micro", "--db-filter=^atlas_micro$$", "--no-database-list"]
+    ports:
+      - "127.0.0.1:8069:8069"
+    volumes:
+      - ./odoo:/mnt/atlas:ro
+      - odoo-data:/var/lib/odoo
+    restart: unless-stopped
+
+volumes:
+  db-data:
+  odoo-data:

@@ -1,0 +1,7 @@
+demarrage.log
+verification.log
+data/atlas_micro.sqlite
+data/prospects_nettoyes.csv
+data/rapport_prospects.txt
+__pycache__/
+*.pyc

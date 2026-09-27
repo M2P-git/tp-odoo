@@ -1,0 +1,4 @@
+commande_id;client_id;date_commande;etat;modalite_code
+CO104;C001;2026-09-07;confirmee;NET30
+CO105;C002;2026-09-08;brouillon;NET30
+CO106;C003;2026-09-09;confirmee;IMMEDIAT
