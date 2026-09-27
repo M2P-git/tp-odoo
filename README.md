@@ -33,7 +33,7 @@ Sous Windows, la **virtualisation** doit être activée dans le BIOS/UEFI (c'est
 **Avec Git** (conseillé), dans un dossier simple, par exemple `C:\cours` :
 
 ```bash
-git clone https://github.com/VOTRE-COMPTE/erp-crm-ci3bi.git
+git clone https://github.com/paulo16/erp-crm-ci3bi.git
 cd erp-crm-ci3bi
 ```
 
