@@ -1,6 +1,6 @@
-# erp-crm-ci3bi — environnement de TP
+# erp-crm-ci3bi : environnement de TP
 
-Dépôt du module **« Gestion intégrée des systèmes ERP et CRM »** (Cycle d'ingénieurs — Business Intelligence, CI3 BI).
+Dépôt du module **« Gestion intégrée des systèmes ERP et CRM »** (Cycle d'ingénieurs en Business Intelligence, CI3 BI).
 Il installe sur votre poste un **Odoo 19** déjà rempli avec les données de notre entreprise fictive **Atlas Micro**,
 ainsi que les fichiers CSV et les scripts Python/SQL des exercices.
 
@@ -16,8 +16,8 @@ ainsi que les fichiers CSV et les scripts Python/SQL des exercices.
 | Système | Windows 10/11 64 bits, macOS 12+ ou Linux | Windows 11 ou macOS récent |
 | Mémoire vive | 4 Go | 8 Go ou plus |
 | Espace disque libre | 6 Go | 10 Go |
-| Droits | Administrateur du PC pour installer Docker Desktop | — |
-| Réseau | ~1 Go à télécharger la première fois (ou clé USB distribuée en classe) | — |
+| Droits | Administrateur du PC pour installer Docker Desktop | - |
+| Réseau | ~1 Go à télécharger la première fois (ou clé USB distribuée en classe) | - |
 
 Sous Windows, la **virtualisation** doit être activée dans le BIOS/UEFI (c'est le cas sur la plupart des PC récents).
 
@@ -30,7 +30,7 @@ Sous Windows, la **virtualisation** doit être activée dans le BIOS/UEFI (c'est
 
 ## 3. Récupérer ce dépôt
 
-**Avec Git** (conseillé) — dans un dossier simple, par exemple `C:\cours` :
+**Avec Git** (conseillé), dans un dossier simple, par exemple `C:\cours` :
 
 ```bash
 git clone https://github.com/VOTRE-COMPTE/erp-crm-ci3bi.git

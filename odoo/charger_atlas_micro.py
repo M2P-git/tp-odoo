@@ -154,7 +154,7 @@ def sale(name, partner, product, qty, price, date_order, commitment, confirm, **
 
 
 co104 = sale("CO104", nova, r10_p, 10, 1200.0, "2026-09-07 09:00:00", "2026-09-10 10:00:00", True,
-             picking_policy="one", origin="Devis V-104", client_order_ref="Nouveau bureau — Yassine")
+             picking_policy="one", origin="Devis V-104", client_order_ref="Nouveau bureau de Yassine")
 co105 = sale("CO105", sigma, r10_p, 2, 1200.0, "2026-09-08 11:00:00", "2026-09-15 10:00:00", False)
 co106 = sale("CO106", meditech, d02_p, 3, 450.0, "2026-09-09 15:00:00", "2026-09-12 10:00:00", True)
 for picking in (co104 | co106).picking_ids:
@@ -184,14 +184,14 @@ PROSPECTS = [
 Lead = env["crm.lead"]
 leads = {}
 for lead_id, date_in, company_name, contact, email, campaign, is_opp, state, amount in PROSPECTS:
-    name = f"{company_name} — {campaign}"
+    name = f"{company_name} ({campaign})"
     if lead_id == "L002":
         name = "Équiper le nouveau bureau de Nova"
     vals = {
         "name": name, "partner_name": company_name, "contact_name": contact, "email_from": email,
         "campaign_id": campaigns[campaign].id, "type": "opportunity" if is_opp else "lead",
         "user_id": sara.id, "expected_revenue": amount,
-        "description": f"Import de la campagne {campaign} — référence {lead_id}.",
+        "description": f"Import de la campagne {campaign}, référence {lead_id}.",
     }
     if lead_id == "L002":
         vals["partner_id"] = yassine.id
