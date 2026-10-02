@@ -1,0 +1,10 @@
+name,is_company,ref,city,country_id,email,parent_id
+Nova Conseil,1,C001,Rabat,MA,contact@nova.example,
+École Sigma,1,C002,Salé,MA,contact@sigma.example,
+MediTech,1,C003,Casablanca,MA,contact@meditech.example,
+TechRoute,1,F01,Casablanca,MA,ventes@techroute.example,
+DockPro,1,F02,Tanger,MA,commandes@dockpro.example,
+Rapidis,1,F03,Rabat,MA,contact@rapidis.example,
+Yassine,0,,Rabat,MA,yassine@nova.example,Nova Conseil
+Karim,0,,Salé,MA,karim@sigma.example,École Sigma
+Ghita,0,,Casablanca,MA,ghita@meditech.example,MediTech

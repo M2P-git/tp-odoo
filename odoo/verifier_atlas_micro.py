@@ -31,7 +31,7 @@ r10 = env["product.product"].search([("default_code", "=", "P-R10")], limit=1)
 controle("Produit P-R10", r10.name, "Routeur Pro R10")
 controle("P-R10 en stock (en main)", r10.qty_available, 6.0)
 controle("P-R10 previsionnel", r10.virtual_available, -4.0)
-controle("Fournisseurs de P-R10", ", ".join(r10.seller_ids.mapped("partner_id.name")), "TechRoute, AltRoute")
+controle("Fournisseurs de P-R10", ", ".join(r10.seller_ids.mapped("partner_id.name")), "TechRoute, Rapidis")
 
 orders = {o.name: o for o in env["sale.order"].search([("name", "in", ["CO104", "CO105", "CO106"])])}
 co104 = orders.get("CO104")
@@ -46,6 +46,27 @@ controle("Reassort P-R10 : quantite a commander", rule.qty_to_order if rule else
 
 leads = env["crm.lead"].with_context(active_test=False).search([("campaign_id", "!=", False)])
 controle("Pistes CRM importees", len(leads), 10)
+
+# --- Seance courante (fichier SEANCE) et correction des seances precedentes ----------------
+try:
+    with open("/mnt/seance", encoding="utf-8") as fichier:
+        seance = int(fichier.read().strip() or 1)
+except (OSError, ValueError):
+    seance = 1
+controle("Seance de la base", env["ir.config_parameter"].sudo().get_param("atlas_micro.seance"), str(seance))
+
+if seance >= 3:  # correction de l'exercice de la seance 2 : la premiere affaire de Dar Services
+    dar = env["res.partner"].search([("ref", "=", "C004")], limit=1)
+    controle("Client C004", dar.name, "Dar Services")
+    controle("Contact de Dar Services", ", ".join(dar.child_ids.mapped("name")), "Meryem")
+    cable = env["product.product"].search([("default_code", "=", "P-C06")], limit=1)
+    controle("Produit P-C06", cable.name, "Câble réseau Cat6 10 m")
+    controle("P-C06 en stock (en main)", cable.qty_available, 20.0)
+    controle("P-C06 previsionnel", cable.virtual_available, 15.0)
+    commande = env["sale.order"].search([("partner_id", "=", dar.id)], limit=1)
+    controle("Devis de Dar Services : etat", commande.state, "sale")
+    livraison = commande.picking_ids[:1]
+    controle("Livraison de Dar Services", livraison.state if livraison else None, "assigned")
 
 print()
 if all(resultats):

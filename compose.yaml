@@ -4,7 +4,7 @@
 #   init  : prépare la base « atlas_micro » au premier lancement (3 à 8 min), puis s'arrête
 #   odoo  : le serveur Odoo, accessible sur http://localhost:8069 (admin / admin)
 # Instance locale de cours : mots de passe simples, port ouvert uniquement sur ce poste.
-name: erp-crm-ci3bi
+name: tp-odoo
 
 services:
   db:
@@ -31,6 +31,7 @@ services:
     entrypoint: ["bash", "-c", "tr -d '\\r' < /mnt/atlas/init.sh > /tmp/init.sh && bash /tmp/init.sh"]
     volumes:
       - ./odoo:/mnt/atlas:ro
+      - ./SEANCE:/mnt/seance:ro
       - odoo-data:/var/lib/odoo
     restart: "no"
 
@@ -44,6 +45,8 @@ services:
       - "127.0.0.1:8069:8069"
     volumes:
       - ./odoo:/mnt/atlas:ro
+      - ./SEANCE:/mnt/seance:ro
+      - ./extra-addons:/mnt/extra-addons:ro   # modules supplementaires (facultatif, voir README)
       - odoo-data:/var/lib/odoo
     restart: unless-stopped
 

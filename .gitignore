@@ -5,3 +5,6 @@ data/prospects_nettoyes.csv
 data/rapport_prospects.txt
 __pycache__/
 *.pyc
+# Modules supplementaires installes par les etudiants (non suivis par Git)
+extra-addons/*
+!extra-addons/.gitkeep

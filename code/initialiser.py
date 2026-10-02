@@ -1,6 +1,6 @@
 """Cree une base SQLite de demonstration depuis les CSV fictifs du livre.
 
-Usage (dans le dossier du depot erp-crm-ci3bi) : python code/initialiser.py
+Usage (dans le dossier du depot tp-odoo) : python code/initialiser.py
 """
 
 from __future__ import annotations

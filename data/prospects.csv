@@ -1,11 +1,11 @@
 lead_id;date_entree;entreprise;contact;email;campagne;est_opportunite;etat
-L001;2026-09-01;Atlas Conseil;Nadia;nadia@atlas.example;Webinaire;0;nouveau
+L001;2026-09-01;Argan Hôtels;Imane;imane@argan.example;Webinaire;0;nouveau
 L002;2026-09-01;Nova Conseil;Yassine;yassine@nova.example;Webinaire;1;gagnee
 L003;2026-09-01;NOVA CONSEIL;Yassine;YASSINE@NOVA.EXAMPLE;Webinaire;1;gagnee
-L004;2026-09-02;MediTech;Salma;salma@meditech.example;Salon;1;perdue
+L004;2026-09-02;MediTech;Ghita;ghita@meditech.example;Salon;1;perdue
 L005;2026-09-03;Delta Labs;Omar;omar@delta.example;Webinaire;1;proposition
-L006;2026-09-01;Atlas Conseil;Nadia;nadia@atlas.example;Webinaire;0;nouveau
+L006;2026-09-01;Argan Hôtels;Imane;imane@argan.example;Webinaire;0;nouveau
 L007;2026-09-04;Ecole Sigma;Karim;karim@sigma.example;Salon;1;gagnee
-L008;2026-09-05;Orbis Services;Nora;nora@orbis.example;Webinaire;1;perdue
-L009;2026-09-06;Zenith Tech;Amine;amine@zenith.example;Webinaire;1;gagnee
-L010;2026-09-07;Riad Data;Lina;lina@riaddata.example;Salon;1;qualifiee
+L008;2026-09-05;Orbis Services;Wafa;wafa@orbis.example;Webinaire;1;perdue
+L009;2026-09-06;Zenith Industrie;Amine;amine@zenith.example;Webinaire;1;gagnee
+L010;2026-09-07;Riad Data;Zineb;zineb@riaddata.example;Salon;1;qualifiee

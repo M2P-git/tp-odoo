@@ -59,8 +59,8 @@ sara = make_user("sara", "Sara Alaoui", "Commerciale",
                  ["sales_team.group_sale_salesman_all_leads"])
 hamza = make_user("hamza", "Hamza Tazi", "Magasinier", ["stock.group_stock_user"])
 leila = make_user("leila", "Leïla Benjelloun", "Acheteuse", ["purchase.group_purchase_user"])
-youssef = make_user("youssef", "Youssef Amrani", "Comptable", ["account.group_account_invoice"])
-log("Acteurs : Sara (commerciale), Hamza (magasinier), Leïla (acheteuse), Youssef (comptable).")
+driss = make_user("driss", "Driss Amrani", "Comptable", ["account.group_account_invoice"])
+log("Acteurs : Sara (commerciale), Hamza (magasinier), Leïla (acheteuse), Driss (comptable).")
 
 # --- 3. Conditions de paiement, clients et fournisseurs ---------------------
 net30 = ref("account.account_payment_term_30days")
@@ -85,12 +85,12 @@ yassine = Partner.create({"name": "Yassine", "parent_id": nova.id, "email": "yas
                           "function": "Responsable informatique", "lang": "fr_FR"})
 Partner.create({"name": "Karim", "parent_id": sigma.id, "email": "karim@sigma.example",
                 "function": "Responsable des achats", "lang": "fr_FR"})
-Partner.create({"name": "Salma", "parent_id": meditech.id, "email": "salma@meditech.example",
+Partner.create({"name": "Ghita", "parent_id": meditech.id, "email": "ghita@meditech.example",
                 "function": "Directrice administrative", "lang": "fr_FR"})
 
 techroute = company_partner("TechRoute", "F01", "Casablanca", "ventes@techroute.example", supplier_rank=1)
 dockpro = company_partner("DockPro", "F02", "Tanger", "commandes@dockpro.example", supplier_rank=1)
-altroute = company_partner("AltRoute", "F03", "Rabat", "contact@altroute.example", supplier_rank=1)
+rapidis = company_partner("Rapidis", "F03", "Rabat", "contact@rapidis.example", supplier_rank=1)
 log("Clients C001 à C003 et fournisseurs F01 à F03 créés.")
 
 # --- 4. Produits suivis en stock et fournisseurs ----------------------------
@@ -105,7 +105,7 @@ r10 = Template.create({
     "route_ids": [(6, 0, [buy.id])],
     "seller_ids": [
         (0, 0, {"partner_id": techroute.id, "price": 780.0, "delay": 5, "min_qty": 1, "sequence": 10}),
-        (0, 0, {"partner_id": altroute.id, "price": 950.0, "delay": 2, "min_qty": 1, "sequence": 20}),
+        (0, 0, {"partner_id": rapidis.id, "price": 950.0, "delay": 2, "min_qty": 1, "sequence": 20}),
     ],
 })
 d02 = Template.create({
@@ -170,16 +170,16 @@ lost_price = ref("crm.lost_reason_1")
 
 # lead_id, date d'entrée, entreprise, contact, courriel, campagne, opportunité ?, état, montant
 PROSPECTS = [
-    ("L001", "2026-09-01", "Atlas Conseil", "Nadia", "nadia@atlas.example", "Webinaire", 0, "nouveau", 0),
+    ("L001", "2026-09-01", "Argan Hôtels", "Imane", "imane@argan.example", "Webinaire", 0, "nouveau", 0),
     ("L002", "2026-09-01", "Nova Conseil", "Yassine", "yassine@nova.example", "Webinaire", 1, "gagnee", 12000),
     ("L003", "2026-09-01", "NOVA CONSEIL", "Yassine", "YASSINE@NOVA.EXAMPLE", "Webinaire", 1, "gagnee", 12000),
-    ("L004", "2026-09-02", "MediTech", "Salma", "salma@meditech.example", "Salon", 1, "perdue", 1350),
+    ("L004", "2026-09-02", "MediTech", "Ghita", "ghita@meditech.example", "Salon", 1, "perdue", 1350),
     ("L005", "2026-09-03", "Delta Labs", "Omar", "omar@delta.example", "Webinaire", 1, "proposition", 6000),
-    ("L006", "2026-09-01", "Atlas Conseil", "Nadia", "nadia@atlas.example", "Webinaire", 0, "nouveau", 0),
+    ("L006", "2026-09-01", "Argan Hôtels", "Imane", "imane@argan.example", "Webinaire", 0, "nouveau", 0),
     ("L007", "2026-09-04", "Ecole Sigma", "Karim", "karim@sigma.example", "Salon", 1, "gagnee", 2400),
-    ("L008", "2026-09-05", "Orbis Services", "Nora", "nora@orbis.example", "Webinaire", 1, "perdue", 4800),
-    ("L009", "2026-09-06", "Zenith Tech", "Amine", "amine@zenith.example", "Webinaire", 1, "gagnee", 3600),
-    ("L010", "2026-09-07", "Riad Data", "Lina", "lina@riaddata.example", "Salon", 1, "qualifiee", 9000),
+    ("L008", "2026-09-05", "Orbis Services", "Wafa", "wafa@orbis.example", "Webinaire", 1, "perdue", 4800),
+    ("L009", "2026-09-06", "Zenith Industrie", "Amine", "amine@zenith.example", "Webinaire", 1, "gagnee", 3600),
+    ("L010", "2026-09-07", "Riad Data", "Zineb", "zineb@riaddata.example", "Salon", 1, "qualifiee", 9000),
 ]
 Lead = env["crm.lead"]
 leads = {}
@@ -214,7 +214,7 @@ for lead, date_in, state in leads.values():
 
 today = dt.date.today()
 leads["L010"][0].activity_schedule("mail.mail_activity_data_call", date_deadline=today + dt.timedelta(days=2),
-                                   summary="Appeler Lina : budget et date de décision", user_id=sara.id)
+                                   summary="Appeler Zineb : budget et date de décision", user_id=sara.id)
 leads["L005"][0].activity_schedule("mail.mail_activity_data_email", date_deadline=today + dt.timedelta(days=1),
                                    summary="Relancer Omar sur la proposition envoyée", user_id=sara.id)
 log("CRM : 2 campagnes, 10 pistes (dont 2 doublons volontaires), 2 activités planifiées.")
