@@ -68,6 +68,23 @@ if seance >= 3:  # correction de l'exercice de la seance 2 : la premiere affaire
     livraison = commande.picking_ids[:1]
     controle("Livraison de Dar Services", livraison.state if livraison else None, "assigned")
 
+if seance >= 4:  # preparation de la seance 4 : postes de travail assembles sur commande
+    mrp = env["ir.module.module"].search([("name", "=", "mrp")], limit=1)
+    controle("Application Fabrication", mrp.state, "installed")
+    poste = env["product.product"].search([("default_code", "=", "P-W1")], limit=1)
+    controle("Produit P-W1", poste.name, "Poste de travail Pro W1")
+    controle("P-W1 suivi par numero de serie", poste.tracking, "serial")
+    uc5 = env["product.product"].search([("default_code", "=", "P-UC5")], limit=1)
+    controle("P-UC5 en stock (en main)", uc5.qty_available, 2.0)
+    controle("Numeros de serie P-UC5", ", ".join(sorted(env["stock.lot"].search([("product_id", "=", uc5.id)]).mapped("name"))),
+             "UC5-0001, UC5-0002")
+    e24 = env["product.product"].search([("default_code", "=", "P-E24")], limit=1)
+    controle("P-E24 en stock (en main)", e24.qty_available, 6.0)
+    k01 = env["product.product"].search([("default_code", "=", "P-K01")], limit=1)
+    controle("P-K01 en stock (en main)", k01.qty_available, 10.0)
+    co107 = env["sale.order"].search([("name", "=", "CO107")], limit=1)
+    controle("CO107 etat", co107.state if co107 else None, "draft")
+
 print()
 if all(resultats):
     print("Tout est pret : l'instance correspond au jeu initial Atlas Micro.")

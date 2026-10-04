@@ -117,6 +117,7 @@ vous avez fait évoluer les données (réception validée, devis confirmé…).
 | Ventes | `CO104` Nova Conseil, 10 routeurs, **confirmée**, livraison en attente ; `CO105` École Sigma, 2 routeurs, **devis** ; `CO106` MediTech, 3 stations, confirmée |
 | Réapprovisionnement | Règle `P-R10` : minimum 3, maximum 12, déclenchement manuel |
 | CRM | Campagnes *Webinaire* et *Salon*, **10 pistes importées telles quelles** (dont 2 doublons volontaires), 2 activités planifiées |
+| À partir de la séance 4 | Application **Fabrication** installée ; composants `P-UC5` Unité centrale (2 en stock, numéros `UC5-0001` et `UC5-0002`), `P-E24` Écran 24 pouces (6, `E24-0001` à `E24-0006`), `P-K01` Kit clavier et souris (10) ; produit fini `P-W1` Poste de travail Pro W1 (6 900 MAD, suivi par numéro de série, **sans nomenclature** : c'est l'exercice) ; devis `CO107` MediTech, 4 postes |
 
 Toutes les données sont **fictives**.
 
