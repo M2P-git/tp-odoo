@@ -2,7 +2,7 @@
 # Prépare la base Odoo « atlas_micro » au premier démarrage (service « init »).
 # La configuration dépend de la séance indiquée dans le fichier SEANCE (monté sur /mnt/seance) :
 #   - le jeu de base Atlas Micro (charger_atlas_micro.py) est toujours chargé ;
-#   - à partir de la séance 4, le module Fabrication (mrp) est installé en plus ;
+#   - à partir de la séance 5, le module Fabrication (mrp) est installé en plus ;
 #   - pour chaque séance k de 2 à N, on charge dans l'ordre la préparation de la séance k
 #     (odoo/preparations/preparation_sNN.py, si elle existe : données nouvelles de la séance),
 #     puis, si k < N, la correction de ses exercices (odoo/corrections/correction_sNN.py) :
@@ -61,7 +61,7 @@ fi
 
 MODULES="crm,sale_management,purchase,stock"
 LIBELLE="CRM, Ventes, Achats et Inventaire"
-if [ "$SEANCE" -ge 4 ]; then
+if [ "$SEANCE" -ge 5 ]; then
     MODULES="$MODULES,mrp"
     LIBELLE="CRM, Ventes, Achats, Inventaire et Fabrication"
 fi

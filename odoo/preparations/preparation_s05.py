@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-"""Préparation de la séance 4 : Atlas Micro assemble des postes de travail sur commande.
+"""Préparation de la séance 5 : Atlas Micro assemble des postes de travail sur commande.
 
-Chargé par init.sh quand la séance courante (fichier SEANCE) est supérieure ou égale à 4,
-après le jeu de base et avant la correction de la séance 4. Le module Fabrication (mrp)
+Chargé par init.sh quand la séance courante (fichier SEANCE) est supérieure ou égale à 5,
+après le jeu de base et avant la correction de la séance 5. Le module Fabrication (mrp)
 est installé par init.sh à partir de cette séance.
-    odoo shell -d atlas_micro < preparation_s04.py
+    odoo shell -d atlas_micro < preparation_s05.py
 Volontairement absents : la nomenclature du poste et sa route de fabrication, que les
 étudiants configurent pendant le TP. La variable « env » est fournie par « odoo shell ».
 Toutes les données sont fictives.
@@ -20,7 +20,7 @@ def ref(xmlid):
 
 
 def log(message):
-    print(f"[preparation s04] {message}", flush=True)
+    print(f"[preparation s05] {message}", flush=True)
 
 
 company = env.ref("base.main_company")

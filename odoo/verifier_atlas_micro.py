@@ -44,9 +44,6 @@ rule = env["stock.warehouse.orderpoint"].search([("product_id", "=", r10.id)], l
 controle("Regle de reappro P-R10 (min/max)", (rule.product_min_qty, rule.product_max_qty) if rule else None, (3.0, 12.0))
 controle("Reassort P-R10 : quantite a commander", rule.qty_to_order if rule else None, 16.0)
 
-leads = env["crm.lead"].with_context(active_test=False).search([("campaign_id", "!=", False)])
-controle("Pistes CRM importees", len(leads), 10)
-
 # --- Seance courante (fichier SEANCE) et correction des seances precedentes ----------------
 try:
     with open("/mnt/seance", encoding="utf-8") as fichier:
@@ -55,6 +52,10 @@ except (OSError, ValueError):
     seance = 1
 controle("Seance de la base", env["ir.config_parameter"].sudo().get_param("atlas_micro.seance"), str(seance))
 
+# Seance 3 corrigee (a partir de la seance 4) : Argan fusionne (-1), Bayt Formation et Kasba Tours (+2)
+leads = env["crm.lead"].with_context(active_test=False).search([("campaign_id", "!=", False)])
+controle("Pistes et opportunites des campagnes", len(leads), 10 if seance < 4 else 11)
+
 if seance >= 3:  # correction de l'exercice de la seance 2 : la premiere affaire de Dar Services
     dar = env["res.partner"].search([("ref", "=", "C004")], limit=1)
     controle("Client C004", dar.name, "Dar Services")
@@ -62,13 +63,25 @@ if seance >= 3:  # correction de l'exercice de la seance 2 : la premiere affaire
     cable = env["product.product"].search([("default_code", "=", "P-C06")], limit=1)
     controle("Produit P-C06", cable.name, "Câble réseau Cat6 10 m")
     controle("P-C06 en stock (en main)", cable.qty_available, 20.0)
-    controle("P-C06 previsionnel", cable.virtual_available, 15.0)
+    controle("P-C06 previsionnel", cable.virtual_available, 15.0 if seance < 4 else 5.0)
     commande = env["sale.order"].search([("partner_id", "=", dar.id)], limit=1)
     controle("Devis de Dar Services : etat", commande.state, "sale")
     livraison = commande.picking_ids[:1]
     controle("Livraison de Dar Services", livraison.state if livraison else None, "assigned")
 
-if seance >= 4:  # preparation de la seance 4 : postes de travail assembles sur commande
+if seance >= 4:  # correction des missions de la seance 3 : le pipeline de Sara
+    bayt = env["crm.lead"].search([("name", "=", "Salle de formation Bayt Formation")], limit=1)
+    controle("Opportunite Bayt Formation", bayt.won_status if bayt else None, "won")
+    vente = env["sale.order"].search([("opportunity_id", "=", bayt.id)], limit=1) if bayt else env["sale.order"]
+    controle("Commande de Bayt Formation (MAD HT)", (vente.state, vente.amount_untaxed) if vente else None, ("sale", 2250.0))
+    kasba = env["crm.lead"].with_context(active_test=False).search([("name", "=", "Wi-Fi des agences Kasba Tours")], limit=1)
+    controle("Opportunite Kasba Tours", kasba.won_status if kasba else None, "lost")
+    argan = env["crm.lead"].with_context(active_test=False).search([("email_normalized", "=", "imane@argan.example")])
+    controle("Pistes Argan Hotels apres fusion", len(argan), 1)
+    d02 = env["product.product"].search([("default_code", "=", "P-D02")], limit=1)
+    controle("P-D02 previsionnel", d02.virtual_available, 1.0)
+
+if seance >= 5:  # preparation de la seance 5 : postes de travail assembles sur commande
     mrp = env["ir.module.module"].search([("name", "=", "mrp")], limit=1)
     controle("Application Fabrication", mrp.state, "installed")
     poste = env["product.product"].search([("default_code", "=", "P-W1")], limit=1)
