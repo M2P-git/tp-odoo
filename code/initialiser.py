@@ -56,6 +56,27 @@ CREATE TABLE stock (
     entrees_attendues INTEGER NOT NULL CHECK (entrees_attendues >= 0),
     autres_sorties_prevues INTEGER NOT NULL CHECK (autres_sorties_prevues >= 0)
 );
+CREATE TABLE tickets (
+    ticket_id TEXT PRIMARY KEY,
+    heure TEXT NOT NULL,
+    vendeuse TEXT NOT NULL,
+    client TEXT,
+    ticket_origine TEXT REFERENCES tickets(ticket_id)
+);
+CREATE TABLE lignes_tickets (
+    ticket_id TEXT NOT NULL REFERENCES tickets(ticket_id),
+    produit_id TEXT NOT NULL,
+    libelle TEXT NOT NULL,
+    quantite INTEGER NOT NULL CHECK (quantite <> 0),
+    prix_ttc_mad INTEGER NOT NULL CHECK (prix_ttc_mad >= 0),
+    cout_unitaire_mad INTEGER NOT NULL CHECK (cout_unitaire_mad >= 0),
+    PRIMARY KEY (ticket_id, produit_id)
+);
+CREATE TABLE paiements_tickets (
+    ticket_id TEXT NOT NULL REFERENCES tickets(ticket_id),
+    moyen TEXT NOT NULL CHECK (moyen IN ('especes', 'carte', 'compte_client')),
+    montant_mad INTEGER NOT NULL
+);
 """
 
 TABLES = [
@@ -66,6 +87,9 @@ TABLES = [
     "commandes",
     "lignes_commandes",
     "stock",
+    "tickets",
+    "lignes_tickets",
+    "paiements_tickets",
 ]
 
 
@@ -86,10 +110,12 @@ def main() -> None:
             columns = list(rows[0])
             placeholders = ", ".join("?" for _ in columns)
             sql = f"INSERT INTO {table} ({', '.join(columns)}) VALUES ({placeholders})"
-            connection.executemany(sql, [tuple(row[c] for c in columns) for row in rows])
+            # Une case vide du CSV devient NULL (client anonyme, ticket sans origine).
+            connection.executemany(sql, [tuple(row[c] or None for c in columns) for row in rows])
         connection.commit()
     print(f"Base creee : {DATABASE}")
     print("3 clients, 2 produits, 3 commandes, 3 lignes, 2 lignes de stock.")
+    print("Comptoir (seance 5) : 7 tickets, 9 lignes, 7 paiements.")
 
 
 if __name__ == "__main__":

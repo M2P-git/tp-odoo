@@ -54,31 +54,42 @@ Expand-Archive tp-odoo.zip -DestinationPath .
 
 Évitez les dossiers synchronisés (OneDrive, Google Drive).
 
-### À chaque séance : revenir exactement à la version de la séance
+### À chaque séance : mettre à jour avec le numéro donné par l'enseignant
 
-Chaque séance, l'enseignant publie la version du jour (le fichier `SEANCE` indique son numéro ; elle contient
-la correction des exercices des séances précédentes). **Cette opération efface vos modifications locales** et recrée Odoo :
+En début de séance (et à chaque reprise annoncée), l'enseignant donne un **numéro** : `3` (début de la séance 3),
+`3.3` (séance 3, reprise à la mission 3), `4`, `5`... Chaque numéro donne un Odoo qui contient déjà la correction
+de **tout ce qui a été fait avant**. **Cette opération efface vos modifications locales** et recrée Odoo :
 
 | Windows | macOS / Linux |
 |---|---|
-| Double-cliquez sur **`mettre-a-jour.cmd`** | `./mettre-a-jour.sh` |
+| Double-cliquez sur **`mettre-a-jour.cmd`**, tapez le numéro, puis `O` | `./mettre-a-jour.sh`, tapez le numéro, puis `o` |
+
+Le fichier affiche la liste des numéros publiés (fichier `seances.txt`) ; la touche Entrée prend le numéro conseillé
+(fichier `SEANCE` du dépôt). On peut aussi le donner directement : `mettre-a-jour.cmd 4`. Utilisez un **point** : `3.3`.
+
+| Numéro | Ce que vous obtenez |
+|---|---|
+| `3` | Séance 3, début : le pipeline de Sara |
+| `3.3` | Séance 3, reprise à la mission 3 « Nettoyer et recompter » (missions 1 et 2 corrigées) |
+| `4` | Séance 4 : séance 3 corrigée (Bayt gagnée, Kasba perdue, Argan fusionnée) |
+| `5` | Séance 5 : séance 4 corrigée, Point de vente et TVA marocaine (20 %), caisse du comptoir ouverte |
 
 Ce que fait le fichier (vous pouvez aussi taper ces commandes vous-même, dans le dossier `tp-odoo`) :
 
 ```bash
 git fetch origin --tags         # récupère les nouveautés publiées
-git reset --hard origin/main    # remplace vos fichiers par ceux de la séance
+git reset --hard origin/main    # remplace vos fichiers par la dernière version
 git clean -fd                   # supprime les fichiers en trop
+echo 3.3 > SEANCE               # le numéro choisi
 docker compose down -v          # efface l'ancien Odoo
-demarrer.cmd                    # (ou ./demarrer.sh) recrée Odoo avec la configuration de la séance
+demarrer.cmd                    # (ou ./demarrer.sh) recrée Odoo pour ce numéro
 ```
 
-Besoin d'une séance précise (séance manquée) : `mettre-a-jour.cmd seance-02` (étiquettes `seance-01`, `seance-02`, ...).
 Voulez-vous garder un fichier modifié ? **Copiez-le hors du dossier avant** de mettre à jour.
+`reinitialiser.cmd` (ou `./reinitialiser.sh`) recrée Odoo pour le **même numéro** que la dernière mise à jour.
 
-**Séances 3 et 4 : une seule version** (étiquette `seance-03`). Mettez à jour au début de la séance 3, puis gardez
-votre Odoo tel quel pour la séance 4 : elle continue sur la même base. Si votre base est abîmée, lancez
-`reinitialiser.cmd` (ou `./reinitialiser.sh`) : vous repartez de la version de la séance 3.
+**Séance 5 : le comptoir.** La caisse du comptoir est déjà ouverte : ne la fermez pas avant la mission 3.
+Base abîmée : `reinitialiser.cmd` rouvre la caisse telle qu'elle était le matin.
 
 ## 4. Démarrer Odoo
 
@@ -121,7 +132,8 @@ vous avez fait évoluer les données (réception validée, devis confirmé…).
 | Ventes | `CO104` Nova Conseil, 10 routeurs, **confirmée**, livraison en attente ; `CO105` École Sigma, 2 routeurs, **devis** ; `CO106` MediTech, 3 stations, confirmée |
 | Réapprovisionnement | Règle `P-R10` : minimum 3, maximum 12, déclenchement manuel |
 | CRM | Campagnes *Webinaire* et *Salon*, **10 pistes importées telles quelles** (dont 2 doublons volontaires), 2 activités planifiées |
-| À partir de la séance 5 | Application **Fabrication** installée ; composants `P-UC5` Unité centrale (2 en stock, numéros `UC5-0001` et `UC5-0002`), `P-E24` Écran 24 pouces (6, `E24-0001` à `E24-0006`), `P-K01` Kit clavier et souris (10) ; produit fini `P-W1` Poste de travail Pro W1 (6 900 MAD, suivi par numéro de série, **sans nomenclature** : c'est l'exercice) ; devis `CO107` MediTech, 4 postes |
+| À partir de la séance 5 | Applications **Point de vente** et localisation marocaine (plan comptable, **TVA 20 %**) ; correction de la séance 4 (16 routeurs achetés chez TechRoute et reçus, `CO104` livrée : **12 routeurs** en stock) ; caisse **Comptoir Atlas Micro** (espèces, carte bancaire, compte client) **ouverte par Nadia** (vendeuse) avec un fonds de **500 MAD** et deux tickets du matin (150 et 300 MAD) ; accessoires `P-S01` souris (125 MAD HT), `P-U32` clé USB (50), `P-H01` casque (250), `P-A65` chargeur (200), vendus avec le routeur, la station et le câble |
+| À partir de la séance 6 | Application **Fabrication** installée ; composants `P-UC5` Unité centrale (2 en stock, numéros `UC5-0001` et `UC5-0002`), `P-E24` Écran 24 pouces (6, `E24-0001` à `E24-0006`), `P-K01` Kit clavier et souris (10) ; produit fini `P-W1` Poste de travail Pro W1 (6 900 MAD, suivi par numéro de série, **sans nomenclature** : c'est l'exercice) ; devis `CO107` MediTech, 4 postes |
 
 Toutes les données sont **fictives**.
 
@@ -135,6 +147,7 @@ python code/initialiser.py                        # crée data/atlas_micro.sqlit
 python code/interroger.py code/requete_s2.sql     # séance 2 : requête à compléter
 python code/import_prospects_a_completer.py       # séance 3 : dédoublonnage des prospects
 python code/calcul_stock_a_completer.py           # séance 4 : calcul de réapprovisionnement
+python code/caisse_a_completer.py                 # séance 5 : chiffre d'affaires, panier moyen, écart de caisse
 ```
 
 ## 7 bis. S'exercer sur sa propre instance Odoo

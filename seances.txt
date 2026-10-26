@@ -1,0 +1,7 @@
+# Seances publiees : le numero a taper dans mettre-a-jour, puis ce que l'on obtient.
+# Chaque etape contient la correction de tout ce qui a ete fait avant elle.
+2        Seance 2 : installation, modules et donnees (jeu de depart)
+3        Seance 3 : le pipeline de Sara, debut de seance
+3.3      Seance 3, reprise a la mission 3 : nettoyer et recompter
+4        Seance 4 : ou sont mes routeurs ? (seance 3 corrigee)
+5        Seance 5 : samedi au comptoir, point de vente (seance 4 corrigee)

@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
-"""Correction des missions de la séance 3 : « Le pipeline de Sara ».
+"""Correction de la séance 3, missions 1 et 2 : « Le pipeline de Sara ».
 
-Chargé par init.sh quand la séance courante (fichier SEANCE) est supérieure ou égale à 4.
-Les séances 3 et 4 partagent la configuration SEANCE = 3 (la séance 4 continue sur la base des étudiants) ;
-la version suivante (SEANCE = 5) repart de l'état corrigé de la séance 3.
-    odoo shell -d atlas_micro < correction_s03.py
+Chargé par init.sh à partir de l'étape 3.2 (fichier SEANCE : 3.2, 3.3, 4, 5...) ; la mission 2
+(tableau croisé) ne modifie aucune donnée. La mission 3 est dans correction_s03_m3.py.
+    odoo shell -d atlas_micro < correction_s03_m1.py
 - Mission 1, niveau 1 : piste Bayt Formation (campagne Salon) convertie, qualifiée, devis S00002 confirmé, gagnée.
 - Mission 1, niveau 2 : opportunité Kasba Tours (campagne Salon) perdue, motif « Trop cher ».
-- Mission 3, niveau 1 : les deux pistes d'Argan Hôtels (L001, L006) fusionnées.
-  Les deux opportunités gagnées de Nova (L002, L003) restent : Odoo refuse de fusionner des affaires gagnées.
 La variable « env » est fournie par « odoo shell ». Toutes les données sont fictives.
 """
 import datetime as dt
@@ -61,11 +58,5 @@ kasba = Lead.create({
 trop_cher = env.ref("crm.lost_reason_1", raise_if_not_found=False)
 kasba.action_set_lost(lost_reason_id=trop_cher.id if trop_cher else False)
 log("Kasba Tours : opportunité perdue, motif « Trop cher ».")
-
-# --- Mission 3 : fusion des deux pistes d'Argan Hôtels ----------------------------------------
-argan = Lead.search([("email_normalized", "=", "imane@argan.example"), ("type", "=", "lead")])
-if len(argan) > 1:
-    argan.merge_opportunity(user_id=sara.id)
-log(f"Argan Hôtels : {len(argan)} pistes fusionnées en une.")
 
 env.cr.commit()

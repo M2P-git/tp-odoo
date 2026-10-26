@@ -1,0 +1,10 @@
+ticket_id;produit_id;libelle;quantite;prix_ttc_mad;cout_unitaire_mad
+T01;P-S01;Souris sans fil S1;1;150;70
+T02;P-H01;Casque audio H1;1;300;140
+T03;P-U32;Clé USB 32 Go;2;60;25
+T03;P-S01;Souris sans fil S1;1;150;70
+T04;P-A65;Chargeur USB-C 65 W;1;240;110
+T04;P-C06;Câble réseau Cat6 10 m;2;54;28
+T05;P-R10;Routeur Pro R10;1;1440;780
+T06;P-U32;Clé USB 32 Go;-1;60;25
+T07;P-D02;Station d'accueil D2;2;540;280
