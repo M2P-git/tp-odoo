@@ -176,6 +176,15 @@ Puis dans Odoo : activez le **mode développeur** (Paramètres, en bas de page),
 cherchez **Web Responsive** (en retirant le filtre « Apps ») et cliquez sur **Activer**. Le dossier `extra-addons/` est ignoré par Git :
 `mettre-a-jour` ne l'efface pas (mais recrée la base : refaites la dernière étape).
 
+## 7 quater. Exercices notés dans Odoo
+
+Les énoncés sont dans le dossier `exercices/`. Avant de commencer, lancez `mettre-a-jour` avec le numéro indiqué.
+
+| Exercice | Numéro | Durée | À rendre |
+|---|---|---|---|
+| [Le comité de midi](exercices/exercice1-le-comite-de-midi.pdf) : synthèse des séances 1 à 4 (CRM, ventes, stock, achats) | `4.5` | 1 h | trois tableaux croisés et un rapport Word |
+| [La journée campus](exercices/exercice2-la-journee-campus.pdf) : Point de vente (séance 5) | `5.5` | 1 h | deux tableaux croisés et un bilan Word |
+
 ## 8. En cas de problème
 
 | Symptôme | Solution |
