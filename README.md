@@ -71,8 +71,10 @@ Le fichier affiche la liste des numéros publiés (fichier `seances.txt`) ; la t
 |---|---|
 | `3` | Séance 3, début : le pipeline de Sara |
 | `3.3` | Séance 3, reprise à la mission 3 « Nettoyer et recompter » (missions 1 et 2 corrigées) |
-| `4` | Séance 4 : séance 3 corrigée (Bayt gagnée, Kasba perdue, Argan fusionnée) |
-| `5` | Séance 5 : séance 4 corrigée, Point de vente et TVA marocaine (20 %), caisse du comptoir ouverte |
+| `4` | Séance 4 : séance 3 corrigée (Bayt gagnée, Kasba perdue, Argan fusionnée), TVA marocaine (20 %) |
+| `4.5` | Exercice de synthèse « Le comité de midi » : la fin de la séance 4 (routeurs achetés, `CO104` livrée) |
+| `5` | Séance 5 : séance 4 corrigée, Point de vente, caisse du comptoir ouverte |
+| `5.5` | Exercice Point de vente « La journée campus » : une seconde caisse, *Stand Campus*, à ouvrir soi-même |
 
 Ce que fait le fichier (vous pouvez aussi taper ces commandes vous-même, dans le dossier `tp-odoo`) :
 
@@ -132,7 +134,8 @@ vous avez fait évoluer les données (réception validée, devis confirmé…).
 | Ventes | `CO104` Nova Conseil, 10 routeurs, **confirmée**, livraison en attente ; `CO105` École Sigma, 2 routeurs, **devis** ; `CO106` MediTech, 3 stations, confirmée |
 | Réapprovisionnement | Règle `P-R10` : minimum 3, maximum 12, déclenchement manuel |
 | CRM | Campagnes *Webinaire* et *Salon*, **10 pistes importées telles quelles** (dont 2 doublons volontaires), 2 activités planifiées |
-| À partir de la séance 5 | Applications **Point de vente** et localisation marocaine (plan comptable, **TVA 20 %**) ; correction de la séance 4 (16 routeurs achetés chez TechRoute et reçus, `CO104` livrée : **12 routeurs** en stock) ; caisse **Comptoir Atlas Micro** (espèces, carte bancaire, compte client) **ouverte par Nadia** (vendeuse) avec un fonds de **500 MAD** et deux tickets du matin (150 et 300 MAD) ; accessoires `P-S01` souris (125 MAD HT), `P-U32` clé USB (50), `P-H01` casque (250), `P-A65` chargeur (200), vendus avec le routeur, la station et le câble |
+| À partir de la séance 4 | Localisation marocaine : plan comptable, **TVA 20 %** |
+| À partir de la séance 5 | Application **Point de vente** ; correction de la séance 4 (16 routeurs achetés chez TechRoute et reçus, `CO104` livrée : **12 routeurs** en stock) ; caisse **Comptoir Atlas Micro** (espèces, carte bancaire, compte client) **ouverte par Nadia** (vendeuse) avec un fonds de **500 MAD** et deux tickets du matin (150 et 300 MAD) ; accessoires `P-S01` souris (125 MAD HT), `P-U32` clé USB (50), `P-H01` casque (250), `P-A65` chargeur (200), vendus avec le routeur, la station et le câble |
 | À partir de la séance 6 | Application **Fabrication** installée ; composants `P-UC5` Unité centrale (2 en stock, numéros `UC5-0001` et `UC5-0002`), `P-E24` Écran 24 pouces (6, `E24-0001` à `E24-0006`), `P-K01` Kit clavier et souris (10) ; produit fini `P-W1` Poste de travail Pro W1 (6 900 MAD, suivi par numéro de série, **sans nomenclature** : c'est l'exercice) ; devis `CO107` MediTech, 4 postes |
 
 Toutes les données sont **fictives**.

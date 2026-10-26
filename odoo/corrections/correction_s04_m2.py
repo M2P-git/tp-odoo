@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Correction des missions de la séance 4 : « Où sont mes routeurs ? ».
+"""Correction de la séance 4, missions 2 et 3 : « Où sont mes routeurs ? ».
 
-Chargé par init.sh quand la séance courante (fichier SEANCE) est supérieure ou égale à 5 :
-la séance 5 repart ainsi de l'état obtenu à la fin de la séance 4.
-    odoo shell -d atlas_micro < correction_s04.py
+Chargé par init.sh à partir de l'étape 4.3 (fichier SEANCE : 4.3, 4.5, 5...) ; la mission 1
+(lecture du stock) et la mission 4 (script) ne modifient aucune donnée.
+    odoo shell -d atlas_micro < correction_s04_m2.py
 - Mission 2, niveau 1 : le réassort propose 16 routeurs ; demande de prix TechRoute confirmée.
 - Mission 3, niveau 1 : réception des 16 routeurs validée, puis livraison des 10 routeurs de CO104.
 Les niveaux 2 (demande de prix Rapidis annulée, réception partielle de stations D2) ne sont pas

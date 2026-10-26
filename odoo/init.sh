@@ -3,14 +3,16 @@
 # La configuration dépend de l'étape indiquée dans le fichier SEANCE (monté sur /mnt/seance) :
 # « N » (début de la séance N) ou « N.M » (séance N, reprise à la mission M), choisie par mettre-a-jour.
 #   - le jeu de base Atlas Micro (charger_atlas_micro.py) est toujours chargé ;
-#   - à partir de la séance 5, le Point de vente (point_of_sale) est installé en plus, avec la
-#     localisation marocaine (plan comptable, TVA à 20 %) ;
+#   - à partir de la séance 4, la localisation marocaine (plan comptable, TVA à 20 %) ; avant,
+#     le plan générique traite les clients marocains en « Foreign Trade » (devis sans taxe) ;
+#   - à partir de la séance 5, le Point de vente (point_of_sale) est installé en plus ;
 #   - à partir de la séance 6, le module Fabrication (mrp) est installé en plus ;
 #   - pour chaque séance k de 2 à N, on charge dans l'ordre la préparation de la séance k
 #     (odoo/preparations/preparation_sNN.py, si elle existe : données nouvelles de la séance),
 #     puis, si k < N, la correction de ses exercices (odoo/corrections/correction_sNN.py et
 #     correction_sNN_mX.py, une par mission) : chaque séance repart de l'état corrigé de la précédente ;
-#   - pour l'étape N.M, on charge aussi les corrections des missions X < M de la séance N.
+#   - pour l'étape N.M, on charge aussi les corrections des missions X < M de la séance N ;
+#   - enfin, si odoo/exercices/etape_N.M.py existe, les données propres à l'exercice de cette étape.
 # - base absente                        : création et chargement ;
 # - base d'une autre étape / incomplète : suppression puis nouvelle création ;
 # - base prête pour cette étape         : rien à faire.
@@ -73,8 +75,11 @@ fi
 
 MODULES="crm,sale_management,purchase,stock"
 LIBELLE="CRM, Ventes, Achats et Inventaire"
+if [ "$SEANCE" -ge 4 ]; then
+    MODULES="$MODULES,l10n_ma"
+fi
 if [ "$SEANCE" -ge 5 ]; then
-    MODULES="$MODULES,point_of_sale,l10n_ma"
+    MODULES="$MODULES,point_of_sale"
     LIBELLE="CRM, Ventes, Achats, Inventaire et Point de vente"
 fi
 if [ "$SEANCE" -ge 6 ]; then
@@ -89,7 +94,7 @@ else
 fi
 echo "[init] 1/3 Installation de $LIBELLE (interface en francais)."
 echo "[init]     Premier lancement : compter 3 a 8 minutes selon le poste."
-if [ "$SEANCE" -ge 5 ]; then
+if [ "$SEANCE" -ge 4 ]; then
     # La societe est placee au Maroc avant l'installation de la comptabilite : Odoo charge alors
     # le plan comptable marocain (TVA a 20 %) au lieu du plan generique (taxe a 15 %).
     odoo "${ODOO_ARGS[@]}" -d "$DB" -i base --load-language=fr_FR --stop-after-init --no-http
@@ -134,6 +139,13 @@ while [ "$k" -le "$SEANCE" ]; do
     done
     k=$((k + 1))
 done
+
+# Exercice rattache a cette etape (odoo/exercices/etape_N.M.py) : ses donnees propres.
+exercice="/mnt/atlas/exercices/etape_${ETAPE}.py"
+if [ -f "$exercice" ]; then
+    echo "[init]     Mise en place de l'exercice de l'etape $ETAPE."
+    odoo shell "${ODOO_ARGS[@]}" -d "$DB" --no-http < "$exercice"
+fi
 
 # Marqueur : la base correspond a cette etape.
 echo "env['ir.config_parameter'].sudo().set_param('atlas_micro.seance', '$ETAPE'); env.cr.commit()" \

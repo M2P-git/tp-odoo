@@ -4,4 +4,6 @@
 3        Seance 3 : le pipeline de Sara, debut de seance
 3.3      Seance 3, reprise a la mission 3 : nettoyer et recompter
 4        Seance 4 : ou sont mes routeurs ? (seance 3 corrigee)
+4.5      Exercice de synthese "Le comite de midi" (fin de la seance 4)
 5        Seance 5 : samedi au comptoir, point de vente (seance 4 corrigee)
+5.5      Exercice point de vente "La journee campus" (caisse Stand Campus)

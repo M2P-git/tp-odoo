@@ -42,24 +42,24 @@ def corrige(k, m):
     """La mission m de la seance k est-elle deja corrigee a cette etape ?"""
     return seance > k or (seance == k and mission is not None and m < mission)
 
-# Le routeur et CO104 : a partir de la seance 5, la seance 4 est corrigee (16 routeurs achetes et
+# Le routeur et CO104 : une fois la mission 2 de la seance 4 corrigee (16 routeurs achetes et
 # recus, CO104 livree), d'ou d'autres valeurs initiales.
 r10 = env["product.product"].search([("default_code", "=", "P-R10")], limit=1)
 controle("Produit P-R10", r10.name, "Routeur Pro R10")
-controle("P-R10 en stock (en main)", r10.qty_available, 6.0 if seance < 5 else 12.0)
-controle("P-R10 previsionnel", r10.virtual_available, -4.0 if seance < 5 else 12.0)
+controle("P-R10 en stock (en main)", r10.qty_available, 12.0 if corrige(4, 2) else 6.0)
+controle("P-R10 previsionnel", r10.virtual_available, 12.0 if corrige(4, 2) else -4.0)
 controle("Fournisseurs de P-R10", ", ".join(r10.seller_ids.mapped("partner_id.name")), "TechRoute, Rapidis")
 
 orders = {o.name: o for o in env["sale.order"].search([("name", "in", ["CO104", "CO105", "CO106"])])}
 co104 = orders.get("CO104")
 controle("CO104 etat", co104.state if co104 else None, "sale")
 delivery = co104.picking_ids[:1] if co104 else env["stock.picking"]
-controle("Livraison de CO104", delivery.state if delivery else None, "confirmed" if seance < 5 else "done")
+controle("Livraison de CO104", delivery.state if delivery else None, "done" if corrige(4, 2) else "confirmed")
 controle("CO105 etat", orders["CO105"].state if "CO105" in orders else None, "draft")
 
 rule = env["stock.warehouse.orderpoint"].search([("product_id", "=", r10.id)], limit=1)
 controle("Regle de reappro P-R10 (min/max)", (rule.product_min_qty, rule.product_max_qty) if rule else None, (3.0, 12.0))
-controle("Reassort P-R10 : quantite a commander", rule.qty_to_order if rule else None, 16.0 if seance < 5 else 0.0)
+controle("Reassort P-R10 : quantite a commander", rule.qty_to_order if rule else None, 0.0 if corrige(4, 2) else 16.0)
 
 # --- Correction des seances precedentes ----------------------------------------------------
 
@@ -110,6 +110,10 @@ if seance >= 5:  # preparation de la seance 5 : le comptoir (Point de vente), TV
     for code, stock in (("P-S01", 29.0), ("P-U32", 40.0), ("P-H01", 11.0), ("P-A65", 15.0)):
         article = env["product.product"].search([("default_code", "=", code)], limit=1)
         controle(f"{code} en stock (en main)", article.qty_available, stock)
+
+if etape == "5.5":  # exercice point de vente : la caisse du stand, pas encore ouverte
+    stand = env["pos.config"].search([("name", "=", "Stand Campus")], limit=1)
+    controle("Caisse Stand Campus (session ouverte ?)", (bool(stand), bool(stand.current_session_id)), (True, False))
 
 if seance >= 6:  # preparation de la seance 6 : postes de travail assembles sur commande
     mrp = env["ir.module.module"].search([("name", "=", "mrp")], limit=1)
