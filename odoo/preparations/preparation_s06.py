@@ -39,7 +39,12 @@ env["res.config.settings"].create({"group_stock_production_lot": True}).execute(
 mrp_user = ref("mrp.group_mrp_user")
 if mrp_user:
     hamza.write({"group_ids": [(4, mrp_user.id)]})
-log("Numéros de série activés ; Hamza (magasinier) peut aussi assembler.")
+# Odoo 19 livre la route « Réapprovisionner sur commande (MTO) » archivée : on la rend
+# disponible pour que les étudiants n'aient qu'à la cocher sur la fiche du poste.
+mto = ref("stock.route_warehouse0_mto")
+if mto:
+    mto.active = True
+log("Numéros de série activés ; route MTO disponible ; Hamza (magasinier) peut aussi assembler.")
 
 # --- 2. Les composants, achetés et suivis en stock --------------------------------
 categ_comp = env["product.category"].create({"name": "Composants"})

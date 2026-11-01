@@ -7,3 +7,4 @@
 4.5      Exercice de synthese "Le comite de midi" (fin de la seance 4)
 5        Seance 5 : samedi au comptoir, point de vente (seance 4 corrigee)
 5.5      Exercice point de vente "La journee campus" (caisse Stand Campus)
+6        Seance 6 : quatre postes pour MediTech, fabrication (seance 5 corrigee)
