@@ -178,12 +178,12 @@ cherchez **Web Responsive** (en retirant le filtre « Apps ») et cliquez sur **
 
 ## 7 quater. Exercices notés dans Odoo
 
-Les énoncés sont dans le dossier `exercices/`. Avant de commencer, lancez `mettre-a-jour` avec le numéro indiqué.
+Les énoncés et leurs corrigés sont dans le dossier `exercices/`. Avant de commencer, lancez `mettre-a-jour` avec le numéro indiqué.
 
-| Exercice | Numéro | Durée | À rendre |
-|---|---|---|---|
-| [Le comité de midi](exercices/exercice1-le-comite-de-midi.pdf) : synthèse des séances 1 à 4 (CRM, ventes, stock, achats) | `4.5` | 1 h | trois tableaux croisés et un rapport Word |
-| [La journée campus](exercices/exercice2-la-journee-campus.pdf) : Point de vente (séance 5) | `5.5` | 1 h | deux tableaux croisés et un bilan Word |
+| Exercice | Numéro | Durée | À rendre | Corrigé |
+|---|---|---|---|---|
+| [Le comité de midi](exercices/exercice1-le-comite-de-midi.pdf) : synthèse des séances 1 à 4 (CRM, ventes, stock, achats) | `4.5` | 1 h | trois tableaux croisés et un rapport Word | [corrigé](exercices/exercice1-le-comite-de-midi-correction.pdf) |
+| [La journée campus](exercices/exercice2-la-journee-campus.pdf) : Point de vente (séance 5) | `5.5` | 1 h | deux tableaux croisés et un bilan Word | [corrigé](exercices/exercice2-la-journee-campus-correction.pdf) |
 
 ## 8. En cas de problème
 
