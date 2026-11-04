@@ -75,6 +75,7 @@ Le fichier affiche la liste des numéros publiés (fichier `seances.txt`) ; la t
 | `4.5` | Exercice de synthèse « Le comité de midi » : la fin de la séance 4 (routeurs achetés, `CO104` livrée) |
 | `5` | Séance 5 : séance 4 corrigée, Point de vente, caisse du comptoir ouverte |
 | `5.5` | Exercice Point de vente « La journée campus » : une seconde caisse, *Stand Campus*, à ouvrir soi-même |
+| `5.9` | **Contrôle continu 1** (épreuve pratique) : séance 5 corrigée, bornes Wi-Fi *AP6* et switchs *S8*, caisse *Stand Smart City* à ouvrir soi-même. **À préparer avant l'épreuve** |
 
 Ce que fait le fichier (vous pouvez aussi taper ces commandes vous-même, dans le dossier `tp-odoo`) :
 
@@ -184,6 +185,8 @@ Les énoncés et leurs corrigés sont dans le dossier `exercices/`. Avant de com
 |---|---|---|---|---|
 | [Le comité de midi](exercices/exercice1-le-comite-de-midi.pdf) : synthèse des séances 1 à 4 (CRM, ventes, stock, achats) | `4.5` | 1 h | trois tableaux croisés et un rapport Word | [corrigé](exercices/exercice1-le-comite-de-midi-correction.pdf) |
 | [La journée campus](exercices/exercice2-la-journee-campus.pdf) : Point de vente (séance 5) | `5.5` | 1 h | deux tableaux croisés et un bilan Word | [corrigé](exercices/exercice2-la-journee-campus-correction.pdf) |
+
+**Contrôle continu 1 (épreuve pratique, 1 h 30).** Préparez votre poste **avant** l'épreuve, au plus tard la veille et avec Internet : `mettre-a-jour` avec le numéro `5.9`, puis `verifier` (toutes les lignes `[OK ]`, puis « Tout est pret »). Ne saisissez plus rien ensuite ; après des essais, `reinitialiser` recrée le même jeu, sans Internet. L'énoncé est distribué le jour de l'épreuve.
 
 ## 8. En cas de problème
 
