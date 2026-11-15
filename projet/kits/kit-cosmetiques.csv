@@ -1,0 +1,13 @@
+Nom;Référence interne;Prix de vente;Coût;Type de produit;Catégories du site web;Description eCommerce;Est publié
+Huile d'argan cosmétique 100 ml;COS-01;140;65;Biens;Visage;Pure, pressée à froid.;1
+Savon noir à l'eucalyptus 250 g;COS-02;45;15;Biens;Hammam;Pour le gommage au gant kessa.;1
+Gant kessa;COS-03;30;10;Biens;Hammam;Gant exfoliant traditionnel.;1
+Ghassoul en poudre 200 g;COS-04;40;14;Biens;Hammam;Argile lavante de l'Atlas.;1
+Eau de rose 200 ml;COS-05;55;20;Biens;Visage;Lotion tonique de la vallée du Dadès.;1
+Crème hydratante à l'argan 50 ml;COS-06;120;48;Biens;Visage;Texture légère, tous types de peau.;1
+Beurre de karité 100 g;COS-07;70;28;Biens;Corps;Pur, non raffiné.;1
+Huile de nigelle 100 ml;COS-08;90;38;Biens;Corps;Pour les cheveux et la peau.;1
+Shampoing solide au ghassoul;COS-09;65;22;Biens;Cheveux;Sans sulfate, 80 g.;1
+Bougie parfumée fleur d'oranger;COS-10;110;40;Biens;Maison;Cire végétale, 40 heures.;1
+Coffret hammam;COS-11;220;90;Biens;Coffrets;Savon noir, kessa, ghassoul, eau de rose.;1
+Soin visage en institut;COS-12;300;0;Service;Soins;Une heure, sur rendez-vous.;1
