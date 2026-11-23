@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="biblio_emprunt_view_list" model="ir.ui.view">
+        <field name="name">biblio.emprunt.list</field>
+        <field name="model">biblio.emprunt</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="livre_id"/>
+                <field name="adherent_id"/>
+                <field name="date_emprunt"/>
+                <field name="duree"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="biblio_emprunt_view_form" model="ir.ui.view">
+        <field name="name">biblio.emprunt.form</field>
+        <field name="model">biblio.emprunt</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="livre_id"/>
+                        <field name="adherent_id"/>
+                        <field name="date_emprunt"/>
+                        <field name="duree"/>
+                        <field name="date_retour"/>
+                        <field name="state"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="biblio_emprunt_action" model="ir.actions.act_window">
+        <field name="name">Emprunts</field>
+        <field name="res_model">biblio.emprunt</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_biblio_livre,biblio.livre,model_biblio_livre,base.group_user,1,1,1,1
+access_biblio_auteur,biblio.auteur,model_biblio_auteur,base.group_user,1,1,1,1
+access_biblio_emprunt,biblio.emprunt,model_biblio_emprunt,base.group_user,1,1,1,1

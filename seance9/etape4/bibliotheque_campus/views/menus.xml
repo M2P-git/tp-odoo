@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="biblio_menu_racine" name="Bibliothèque" sequence="60"
+              web_icon="bibliotheque_campus,static/description/icon.png"/>
+    <menuitem id="biblio_menu_emprunts" name="Emprunts" parent="biblio_menu_racine"
+              action="biblio_emprunt_action" sequence="10"/>
+    <menuitem id="biblio_menu_livres" name="Livres" parent="biblio_menu_racine"
+              action="biblio_livre_action" sequence="20"/>
+    <menuitem id="biblio_menu_auteurs" name="Auteurs" parent="biblio_menu_racine"
+              action="biblio_auteur_action" sequence="30"/>
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_partner_view_form_bibliotheque" model="ir.ui.view">
+        <field name="name">res.partner.form.bibliotheque</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Bibliothèque" name="bibliotheque">
+                    <group>
+                        <field name="nb_emprunts_en_cours"/>
+                    </group>
+                    <field name="emprunt_ids" readonly="1">
+                        <list>
+                            <field name="livre_id"/>
+                            <field name="date_emprunt"/>
+                            <field name="date_retour_prevue"/>
+                            <field name="state"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

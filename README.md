@@ -179,14 +179,62 @@ cherchez **Web Responsive** (en retirant le filtre « Apps ») et cliquez sur **
 
 ## 7 quater. Exercices notés dans Odoo
 
-Les énoncés et leurs corrigés sont dans le dossier `exercices/`. Avant de commencer, lancez `mettre-a-jour` avec le numéro indiqué.
+Les énoncés sont dans le dossier `exercices/` ; un corrigé y est ajouté après la correction de l'exercice.
+Quand un numéro est indiqué, lancez `mettre-a-jour` avec ce numéro avant de commencer.
 
 | Exercice | Numéro | Durée | À rendre | Corrigé |
 |---|---|---|---|---|
 | [Le comité de midi](exercices/exercice1-le-comite-de-midi.pdf) : synthèse des séances 1 à 4 (CRM, ventes, stock, achats) | `4.5` | 1 h | trois tableaux croisés et un rapport Word | [corrigé](exercices/exercice1-le-comite-de-midi-correction.pdf) |
 | [La journée campus](exercices/exercice2-la-journee-campus.pdf) : Point de vente (séance 5) | `5.5` | 1 h | deux tableaux croisés et un bilan Word | [corrigé](exercices/exercice2-la-journee-campus-correction.pdf) |
+| [Rabat Car](exercices/exercice3-rabat-car.pdf) : une application de location de voitures construite avec Studio (séance 8), sur **votre base Odoo Online** | - | 1 h 30 | un PDF de captures et les réponses aux questions | - |
+| [Catégories et pénalités](exercices/exercice4-categories-et-penalites.pdf) : le module Python de la séance 9 à faire évoluer, sur votre Odoo local | - | avant la séance 10 | le module zippé et un PDF de captures | - |
+
+**Le jeu de test de Rabat Car** (exercice 3, étape 10) est dans le dossier `exercices/rabat-car/` : cinq fichiers CSV, encodés en **UTF-8**,
+séparateur **point-virgule** (`;`), dont la première ligne contient les libellés des champs. Importez-les **dans l'ordre de leur numéro** :
+un véhicule cite sa catégorie, une réservation cite son client, son véhicule et ses options, qui doivent exister avant.
+
+| Fichier | Contenu | Où l'importer |
+|---|---|---|
+| `1-categories.csv` | Citadine, Berline, SUV, Utilitaire, avec leur caution | Catégorie |
+| `2-options.csv` | GPS, Siège bébé, Conducteur supplémentaire, avec leur prix par jour | Option |
+| `3-clients.csv` | Hamza El Fassi, Leïla Berrada, Mehdi Tazi | Contacts |
+| `4-vehicules.csv` | les quatre véhicules, avec leur catégorie | Véhicules |
+| `5-reservations.csv` | R001 à R005, décembre 2026 (options séparées par une virgule : `GPS,Siège bébé`) | Réservation |
+
+Dans la liste concernée : menu d'actions (engrenage), **Importer**, choisir le fichier, **Tester**, puis **Importer**.
+Si Odoo ne reconnaît pas le séparateur, choisissez **Point-virgule** et l'encodage **UTF-8** dans les options de l'import.
 
 **Contrôle continu 1 (épreuve pratique, 1 h 30).** Préparez votre poste **avant** l'épreuve, au plus tard la veille et avec Internet : `mettre-a-jour` avec le numéro `5.9`, puis `verifier` (toutes les lignes `[OK ]`, puis « Tout est pret »). Ne saisissez plus rien ensuite ; après des essais, `reinitialiser` recrée le même jeu, sans Internet. L'énoncé est distribué le jour de l'épreuve.
+
+## 7 quinquies. Séance 9 : le module « Bibliothèque du campus »
+
+À la séance 9, chacun écrit pas à pas, sur son Odoo local, le module `bibliotheque_campus` dans le dossier `extra-addons/`
+(le seul que Docker montre à Odoo). Le dossier `seance9/` contient la **version attendue à la fin de chaque étape**,
+installable telle quelle :
+
+| Dossier | Fin de l'étape |
+|---|---|
+| `seance9/etape1/bibliotheque_campus` | 1. Un module qui s'installe : le livre, sa vue, son menu |
+| `seance9/etape2/bibliotheque_campus` | 2. Les champs et les relations : auteurs, emprunts |
+| `seance9/etape3/bibliotheque_campus` | 3. Des écrans utiles |
+| `seance9/etape4/bibliotheque_campus` | 4. La logique : calculs, bouton, contraintes |
+| `seance9/etape5/bibliotheque_campus` | 5. L'héritage : la fiche Contact complétée (point de départ de l'exercice 4) |
+
+Les cinq étapes portent le **même nom de module** : une seule à la fois dans `extra-addons/`. Ne modifiez pas les fichiers
+de `seance9/` (`mettre-a-jour` les remplace) : travaillez dans `extra-addons/`, que `mettre-a-jour` ne touche pas.
+
+**Bloqué à une étape ?** Mettez votre version de côté, hors du dépôt, puis copiez l'étape fournie (ici l'étape 3), dans le dossier `tp-odoo` :
+
+| Geste | Windows (PowerShell) | macOS / Linux |
+|---|---|---|
+| Mettre votre version de côté | `Move-Item extra-addons\bibliotheque_campus ..\ma-version-etape3` | `mv extra-addons/bibliotheque_campus ../ma-version-etape3` |
+| Copier l'étape fournie | `Copy-Item -Recurse seance9\etape3\bibliotheque_campus extra-addons\` | `cp -r seance9/etape3/bibliotheque_campus extra-addons/` |
+| Redémarrer Odoo | `docker compose restart odoo` | `docker compose restart odoo` |
+
+Puis dans Odoo, en mode développeur (<http://localhost:8069/odoo/apps?debug=1>) : module déjà installé, carte du module
+**Bibliothèque du campus**, menu, puis **Mettre à niveau** ; module pas encore installé, **Mettre à jour la liste des Apps**,
+cherchez « bibliotheque », puis **Activer**. Après `mettre-a-jour` ou `reinitialiser`, la base est recréée : le dossier reste
+dans `extra-addons/`, mais le module est à réinstaller. En cas d'erreur : `docker compose logs odoo --tail 40`.
 
 ## 8. En cas de problème
 

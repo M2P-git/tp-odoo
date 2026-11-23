@@ -1,0 +1,6 @@
+Référence;Client;Véhicule;Date de début;Date de fin;Étape;Options
+R001;Hamza El Fassi;12345-A-1;2026-12-01 09:00:00;2026-12-04 09:00:00;Confirmée;GPS
+R002;Leïla Berrada;34567-A-6;2026-12-05 10:00:00;2026-12-10 10:00:00;En cours;GPS,Siège bébé
+R003;Mehdi Tazi;45678-D-1;2026-12-02 08:00:00;2026-12-03 18:00:00;Terminée;
+R004;Leïla Berrada;12345-A-1;2026-12-10 09:00:00;2026-12-12 09:00:00;Brouillon;
+R005;Hamza El Fassi;34567-A-6;2026-12-20 09:00:00;2026-12-27 09:00:00;Confirmée;Conducteur supplémentaire
