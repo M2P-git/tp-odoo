@@ -1,0 +1,15 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "Odoo du cours",
+      "Group": "Servers",
+      "Host": "db",
+      "Port": 5432,
+      "MaintenanceDB": "postgres",
+      "Username": "odoo",
+      "SSLMode": "prefer",
+      "DBRestriction": "atlas_micro",
+      "Comment": "Base du cours : utilisateur odoo, mot de passe odoo (instance locale, port fermé vers l'extérieur)."
+    }
+  }
+}

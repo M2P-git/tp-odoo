@@ -50,6 +50,28 @@ services:
       - odoo-data:/var/lib/odoo
     restart: unless-stopped
 
+  # Facultatif (séance 9) : pgAdmin, pour voir les tables d'Odoo et tester des requêtes SQL.
+  # Démarrage : docker compose --profile sql up -d   puis http://localhost:5050
+  # Le serveur « Odoo du cours » est déjà déclaré ; mot de passe de la base : odoo.
+  pgadmin:
+    image: dpage/pgadmin4:9
+    profiles: ["sql"]
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@tp-odoo.ma
+      PGADMIN_DEFAULT_PASSWORD: odoo
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+    volumes:
+      - ./outils/pgadmin/servers.json:/pgadmin4/servers.json:ro
+      - pgadmin-data:/var/lib/pgadmin
+    ports:
+      - "127.0.0.1:5050:80"
+    restart: unless-stopped
+
 volumes:
   db-data:
   odoo-data:
+  pgadmin-data:

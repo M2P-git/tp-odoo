@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="biblio_emprunt_view_list" model="ir.ui.view">
+        <field name="name">biblio.emprunt.list</field>
+        <field name="model">biblio.emprunt</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="retard &gt; 0 and state == 'emprunte'" decoration-muted="state == 'rendu'">
+                <field name="livre_id"/>
+                <field name="adherent_id"/>
+                <field name="date_emprunt"/>
+                <field name="date_retour_prevue"/>
+                <field name="retard"/>
+                <field name="state" widget="badge" decoration-success="state == 'rendu'" decoration-info="state == 'emprunte'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="biblio_emprunt_view_form" model="ir.ui.view">
+        <field name="name">biblio.emprunt.form</field>
+        <field name="model">biblio.emprunt</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_rendre" type="object" string="Rendre le livre"
+                            class="oe_highlight" invisible="state != 'emprunte'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Qui emprunte quoi ?">
+                            <field name="livre_id"/>
+                            <field name="adherent_id"/>
+                        </group>
+                        <group string="Les dates">
+                            <field name="date_emprunt"/>
+                            <field name="duree"/>
+                            <field name="date_retour_prevue"/>
+                            <field name="date_retour" invisible="state != 'rendu'"/>
+                            <field name="retard"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="biblio_emprunt_view_search" model="ir.ui.view">
+        <field name="name">biblio.emprunt.search</field>
+        <field name="model">biblio.emprunt</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="livre_id"/>
+                <field name="adherent_id"/>
+                <filter name="en_cours" string="En cours" domain="[('state', '=', 'emprunte')]"/>
+                <filter name="en_retard" string="En retard"
+                        domain="[('state', '=', 'emprunte'), ('date_retour_prevue', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="rendus" string="Rendus" domain="[('state', '=', 'rendu')]"/>
+                <group>
+                    <filter name="par_livre" string="Livre" context="{'group_by': 'livre_id'}"/>
+                    <filter name="par_adherent" string="Adhérent" context="{'group_by': 'adherent_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="biblio_emprunt_action" model="ir.actions.act_window">
+        <field name="name">Emprunts</field>
+        <field name="res_model">biblio.emprunt</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_en_cours': 1}</field>
+    </record>
+</odoo>

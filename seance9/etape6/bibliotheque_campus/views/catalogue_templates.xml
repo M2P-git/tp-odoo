@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Page publique /bibliotheque : gabarit QWeb, affiché dans la mise en page web d'Odoo -->
+    <template id="page_catalogue" name="Catalogue de la bibliothèque">
+        <t t-call="web.frontend_layout">
+            <div class="container py-4">
+                <h1>Bibliothèque du campus</h1>
+                <p class="text-muted">Les livres et leurs exemplaires disponibles, lus en direct dans Odoo.</p>
+                <p>
+                    <a href="/bibliotheque" t-attf-class="btn btn-sm me-1 #{'btn-primary' if not genre else 'btn-outline-primary'}">Tous</a>
+                    <t t-foreach="genres" t-as="code">
+                        <a t-attf-href="/bibliotheque?genre=#{code}"
+                           t-attf-class="btn btn-sm me-1 #{'btn-primary' if genre == code else 'btn-outline-primary'}"
+                           t-out="genres[code]"/>
+                    </t>
+                </p>
+                <table class="table table-striped align-middle">
+                    <thead>
+                        <tr>
+                            <th>Titre</th>
+                            <th>Auteurs</th>
+                            <th>Genre</th>
+                            <th class="text-end">Disponibles</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="livres" t-as="livre">
+                            <td t-out="livre.name"/>
+                            <td t-out="', '.join(livre.auteur_ids.mapped('name'))"/>
+                            <td t-out="genres.get(livre.genre, '')"/>
+                            <td class="text-end">
+                                <span t-if="livre.nb_disponibles &gt; 0" class="badge text-bg-success" t-out="livre.nb_disponibles"/>
+                                <span t-else="" class="badge text-bg-danger">Aucun</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p t-if="not livres" class="text-muted">Aucun livre dans ce genre.</p>
+            </div>
+        </t>
+    </template>
+
+    <!-- Une entrée de menu dans Odoo qui ouvre la page publique dans un nouvel onglet -->
+    <record id="biblio_action_page_catalogue" model="ir.actions.act_url">
+        <field name="name">Catalogue public</field>
+        <field name="url">/bibliotheque</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

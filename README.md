@@ -219,8 +219,9 @@ installable telle quelle :
 | `seance9/etape3/bibliotheque_campus` | 3. Des écrans utiles |
 | `seance9/etape4/bibliotheque_campus` | 4. La logique : calculs, bouton, contraintes |
 | `seance9/etape5/bibliotheque_campus` | 5. L'héritage : la fiche Contact complétée (point de départ de l'exercice 4) |
+| `seance9/etape6/bibliotheque_campus` | 6. Une page sur mesure : le catalogue public <http://localhost:8069/bibliotheque> |
 
-Les cinq étapes portent le **même nom de module** : une seule à la fois dans `extra-addons/`. Ne modifiez pas les fichiers
+Les six étapes portent le **même nom de module** : une seule à la fois dans `extra-addons/`. Ne modifiez pas les fichiers
 de `seance9/` (`mettre-a-jour` les remplace) : travaillez dans `extra-addons/`, que `mettre-a-jour` ne touche pas.
 
 **Bloqué à une étape ?** Mettez votre version de côté, hors du dépôt, puis copiez l'étape fournie (ici l'étape 3), dans le dossier `tp-odoo` :
@@ -235,6 +236,30 @@ Puis dans Odoo, en mode développeur (<http://localhost:8069/odoo/apps?debug=1>)
 **Bibliothèque du campus**, menu, puis **Mettre à niveau** ; module pas encore installé, **Mettre à jour la liste des Apps**,
 cherchez « bibliotheque », puis **Activer**. Après `mettre-a-jour` ou `reinitialiser`, la base est recréée : le dossier reste
 dans `extra-addons/`, mais le module est à réinstaller. En cas d'erreur : `docker compose logs odoo --tail 40`.
+
+**Étape 6 (page publique).** Elle ajoute du Python (le dossier `controllers/`) : après la copie, **redémarrez** Odoo **puis**
+mettez le module à niveau. Sans redémarrage, <http://localhost:8069/bibliotheque> affiche une page 404.
+
+### Voir les tables d'Odoo avec pgAdmin
+
+Le fichier `compose.yaml` contient un service facultatif, **pgAdmin 4**, pour parcourir les tables PostgreSQL d'Odoo et tester
+des requêtes SQL. Il ne démarre pas avec `demarrer` : il faut le demander. Dans le dossier `tp-odoo` :
+
+```bash
+git pull                                  # récupère ce service sans toucher à la base (ou mettre-a-jour, qui recrée la base)
+docker compose --profile sql up -d        # démarre Odoo et pgAdmin
+```
+
+Ouvrez <http://localhost:5050> : le serveur **Odoo du cours** est déjà déclaré (base `atlas_micro`, utilisateur `odoo`).
+À la première connexion, pgAdmin demande le mot de passe de la base : **`odoo`** (cochez *Save Password*).
+Pour écrire une requête : sélectionnez `atlas_micro`, menu **Tools**, **Query Tool**, puis **F5** pour l'exécuter.
+pgAdmin n'est accessible que depuis votre PC. Pour l'arrêter : `docker compose --profile sql stop pgadmin`.
+
+Sans pgAdmin, le client en ligne de commande suffit : `docker compose exec db psql -U odoo atlas_micro`
+(`\dt` liste les tables, `\d res_partner` décrit une table, `\q` quitte).
+
+On **lit** la base d'Odoo en SQL ; on n'y écrit jamais (pas d'`UPDATE` ni de `DELETE`) : une modification en SQL contourne
+les calculs, les contraintes et les droits d'Odoo.
 
 ## 8. En cas de problème
 
