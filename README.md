@@ -76,6 +76,7 @@ Le fichier affiche la liste des numéros publiés (fichier `seances.txt`) ; la t
 | `5` | Séance 5 : séance 4 corrigée, Point de vente, caisse du comptoir ouverte |
 | `5.5` | Exercice Point de vente « La journée campus » : une seconde caisse, *Stand Campus*, à ouvrir soi-même |
 | `5.9` | **Contrôle continu 1** (épreuve pratique) : séance 5 corrigée, bornes Wi-Fi *AP6* et switchs *S8*, caisse *Stand Smart City* à ouvrir soi-même. **À préparer avant l'épreuve** |
+| `6` | Séance 6 : séance 5 corrigée, Fabrication installée, quatre postes pour MediTech. **Numéro de départ de la séance 9** (module et SQL) |
 
 Ce que fait le fichier (vous pouvez aussi taper ces commandes vous-même, dans le dossier `tp-odoo`) :
 
@@ -84,7 +85,7 @@ git fetch origin --tags         # récupère les nouveautés publiées
 git reset --hard origin/main    # remplace vos fichiers par la dernière version
 git clean -fd                   # supprime les fichiers en trop
 echo 3.3 > SEANCE               # le numéro choisi
-docker compose down -v          # efface l'ancien Odoo
+docker compose --profile sql down -v   # efface l'ancien Odoo (et pgAdmin s'il tourne)
 demarrer.cmd                    # (ou ./demarrer.sh) recrée Odoo pour ce numéro
 ```
 
@@ -224,21 +225,30 @@ installable telle quelle :
 Les six étapes portent le **même nom de module** : une seule à la fois dans `extra-addons/`. Ne modifiez pas les fichiers
 de `seance9/` (`mettre-a-jour` les remplace) : travaillez dans `extra-addons/`, que `mettre-a-jour` ne touche pas.
 
+**Numéro de séance : `6`.** La séance 9 part d'un Odoo au numéro 6 (`mettre-a-jour`, numéro `6`) ; les résultats attendus
+des requêtes SQL (Q16 à Q21) supposent ce numéro.
+
 **Bloqué à une étape ?** Mettez votre version de côté, hors du dépôt, puis copiez l'étape fournie (ici l'étape 3), dans le dossier `tp-odoo` :
 
 | Geste | Windows (PowerShell) | macOS / Linux |
 |---|---|---|
 | Mettre votre version de côté | `Move-Item extra-addons\bibliotheque_campus ..\ma-version-etape3` | `mv extra-addons/bibliotheque_campus ../ma-version-etape3` |
-| Copier l'étape fournie | `Copy-Item -Recurse seance9\etape3\bibliotheque_campus extra-addons\` | `cp -r seance9/etape3/bibliotheque_campus extra-addons/` |
+| Copier l'étape fournie | `Copy-Item -Recurse -Force seance9\etape3\bibliotheque_campus extra-addons\` | `cp -r seance9/etape3/bibliotheque_campus extra-addons/` |
 | Redémarrer Odoo | `docker compose restart odoo` | `docker compose restart odoo` |
+
+Passer d'une étape fournie à la suivante (de l'étape 5 à l'étape 6, par exemple) : copiez directement par-dessus, sans
+mettre de côté. Sous Windows, gardez **`-Force`** : sans lui, PowerShell affiche en rouge « Il existe déjà un élément avec
+le nom spécifié » pour chaque dossier, alors que les fichiers sont bien copiés.
 
 Puis dans Odoo, en mode développeur (<http://localhost:8069/odoo/apps?debug=1>) : module déjà installé, carte du module
 **Bibliothèque du campus**, menu, puis **Mettre à niveau** ; module pas encore installé, **Mettre à jour la liste des Apps**,
 cherchez « bibliotheque », puis **Activer**. Après `mettre-a-jour` ou `reinitialiser`, la base est recréée : le dossier reste
 dans `extra-addons/`, mais le module est à réinstaller. En cas d'erreur : `docker compose logs odoo --tail 40`.
 
-**Étape 6 (page publique).** Elle ajoute du Python (le dossier `controllers/`) : après la copie, **redémarrez** Odoo **puis**
-mettez le module à niveau. Sans redémarrage, <http://localhost:8069/bibliotheque> affiche une page 404.
+**Étape 6 (page publique).** Elle ajoute du Python (le dossier `controllers/`) et un fichier au manifeste : après la copie,
+**redémarrez** Odoo **puis** mettez le module à niveau. Sans redémarrage, la mise à niveau échoue (« Oups ! », et dans les
+détails *External ID not found … biblio_action_page_catalogue*) : Odoo a gardé l'ancien manifeste en mémoire. Sans mise à
+niveau, <http://localhost:8069/bibliotheque> affiche une page 404.
 
 ### Voir les tables d'Odoo avec pgAdmin
 
@@ -250,10 +260,15 @@ git pull                                  # récupère ce service sans toucher �
 docker compose --profile sql up -d        # démarre Odoo et pgAdmin
 ```
 
+Si `git pull` refuse à cause du fichier `SEANCE` (« Please commit your changes or stash them before you merge »), lancez
+`mettre-a-jour` avec le numéro `6` : il récupère tout, mais recrée la base. La première fois, Docker télécharge l'image de
+pgAdmin (`dpage/pgadmin4:9`, environ 640 Mo une fois installée) : faites-le avant la séance si possible.
+
 Ouvrez <http://localhost:5050> : le serveur **Odoo du cours** est déjà déclaré (base `atlas_micro`, utilisateur `odoo`).
 À la première connexion, pgAdmin demande le mot de passe de la base : **`odoo`** (cochez *Save Password*).
 Pour écrire une requête : sélectionnez `atlas_micro`, menu **Tools**, **Query Tool**, puis **F5** pour l'exécuter.
-pgAdmin n'est accessible que depuis votre PC. Pour l'arrêter : `docker compose --profile sql stop pgadmin`.
+pgAdmin n'est accessible que depuis votre PC. Pour l'arrêter seul : `docker compose --profile sql stop pgadmin` ;
+`arreter` l'arrête aussi, avec Odoo.
 
 Sans pgAdmin, le client en ligne de commande suffit : `docker compose exec db psql -U odoo atlas_micro`
 (`\dt` liste les tables, `\d res_partner` décrit une table, `\q` quitte).
@@ -279,7 +294,7 @@ Pour éviter que toute la classe télécharge les mêmes images en même temps :
 
 ```bash
 # sur un poste déjà prêt
-docker save -o atlas-images.tar odoo:19.0 postgres:16
+docker save -o atlas-images.tar odoo:19.0 postgres:16 dpage/pgadmin4:9
 # sur chaque poste, depuis la clé USB
 docker load -i atlas-images.tar
 ```

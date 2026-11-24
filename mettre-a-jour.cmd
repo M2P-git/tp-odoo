@@ -72,7 +72,7 @@ rem Tout le bloc ci-dessous est lu d'un coup par cmd : il reste valide meme si c
   echo Etape 3/4 : seance %CHOIX% inscrite dans le fichier SEANCE
   >SEANCE echo %CHOIX%
   echo Etape 4/4 : recreation d'Odoo pour la seance %CHOIX%
-  docker compose down -v
+  docker compose --profile sql down -v
   call "%~dp0demarrer.cmd"
   exit /b 0
 )

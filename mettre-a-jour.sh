@@ -51,7 +51,7 @@ main() {
   echo "Etape 3/4 : seance $choix inscrite dans le fichier SEANCE"
   echo "$choix" > SEANCE
   echo "Etape 4/4 : recreation d'Odoo pour la seance $choix"
-  docker compose down -v
+  docker compose --profile sql down -v
   bash ./demarrer.sh
   exit $?
 }
